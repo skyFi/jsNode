@@ -47,3 +47,39 @@ typeof用以获取一个变量或者表达式的类型，typeof一般只能返�
 instanceof 表示某个变量是否是某个对象的实例，null是个特殊的Object类型的值 ，表示空引用的意思 。但null返回object这个其实是最初JavaScript的实现的一个错误， 
 然后被ECMAScript沿用了，成为了现在的标准，不过我们把null可以理解为尚未存在的对象的占位符，这样就不矛盾了 ，虽然这是一种“辩解”。<br>
 对于我们开发人员 还是要警惕这种“语言特性”。最终返回：["object", false]
+<h1>3) [[3,2,1].reduce(Math.pow),[].reduce(Math.pow)]的运行结果是？</h1>
+<pre>
+A.报错
+B.[9,0]
+C.[9,NaN]
+D.[9,undefined]
+</pre>
+<h2>分析</h2>
+<p>A</p>
+pow() 方法可返回 x 的 y 次幂的值。[3,2,1].reduce(Math.pow);等同于：
+<pre><code>
+function testFuc(x,y){
+        console.info(x +" : "+y);
+        return Math.pow(x,y);
+}
+console.info([3,2,1].reduce(testFuc));
+</code></pre>
+执行<code>Math.pow(3,2)</code>和<code>Math.pow(9,1)</code，最终返回9。
+但是要注意pow的参数都是必须的，<code>[].reduce(Math.pow)</code>，等同于执行<code>Math.pow();</code>会导致错误。
+<h3>这里要介绍下<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce" target="_blank"><code>arr.reduce(callback[, initialValue])</code></a>了</h3>
+<blockquote>
+<b>Parameters</b>
+
+callback
+Function to execute on each value in the array, taking four arguments:
+previousValue
+The value previously returned in the last invocation of the callback, or initialValue, if supplied. (See below.)
+currentValue
+The current element being processed in the array.
+index
+The index of the current element being processed in the array.
+array
+The array reduce was called upon.
+initialValue
+Optional. Object to use as the first argument to the first call of the callback.
+</blockquote>
