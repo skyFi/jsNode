@@ -107,4 +107,29 @@ D.Hello undefined
 <h2>分析</h2>
 <p>A</p>
 <p>js函数内有个叫做【声明提前】的东西。故选A。</p>
+<h1>5) 以下代码的运行结果是：</h1>
+<pre><code>
+var arr = [0,1,2];
+arr[10] = 10;
+arr.filter(function(x){return x === undefined});
+</code></pre>
+<pre><code>
+A.[undefined x 7]
+B.[0,1,2,10]
+C.[]
+D.[undefined]
+</code></pre>
+<h2>分析</h2>
+<p>C</p>
+<p>filter会接触到没有被赋值的元素，即在arr中，长度为10但实际数值元素列表为[0, 1, 2, 10]，因此，最终返回一个空的数组[]</p>
+<h3>又有机会解释js函数了哈<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter" target="_blank">arr.filter(callback[, thisArg])</a></h3>
+国际惯例，官方解释：
+<pre><blockquote>
+<b>Parameters</b>
 
+    callback
+        Function to test each element of the array. Invoked with arguments (element, index, array). 
+        Return true to keep the element, false otherwise.
+    thisArg
+        Optional. Value to use as this when executing callback.
+</blockquote></pre>
