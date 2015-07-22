@@ -47,7 +47,7 @@ typeof用以获取一个变量或者表达式的类型，typeof一般只能返�
 instanceof 表示某个变量是否是某个对象的实例，null是个特殊的Object类型的值 ，表示空引用的意思 。但null返回object这个其实是最初JavaScript的实现的一个错误， 
 然后被ECMAScript沿用了，成为了现在的标准，不过我们把null可以理解为尚未存在的对象的占位符，这样就不矛盾了 ，虽然这是一种“辩解”。<br>
 对于我们开发人员 还是要警惕这种“语言特性”。最终返回：["object", false]
-<h1>3) <code>[[3,2,1].reduce(Math.pow),[].reduce(Math.pow)]</code>的运行结果是？</h1>
+<h1>3) [[3,2,1].reduce(Math.pow),[].reduce(Math.pow)]的运行结果是？</h1>
 <pre>
 A.报错
 B.[9,0]
