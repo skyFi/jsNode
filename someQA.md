@@ -74,7 +74,8 @@ console.info([3,2,1].reduce(testFuc));
 <b>allback</b>
       Function to execute on each value in the array, taking four arguments:
       <b>previousValue</b>
-         The value previously returned in the last invocation of the callback, or initialValue, if supplied. (See below.)
+         The value previously returned in the last invocation of the callback,
+         or initialValue, if supplied.
       <b>currentValue</b>
          The current element being processed in the array.
       <b>index</b>
