@@ -67,19 +67,20 @@ console.info([3,2,1].reduce(testFuc));
 执行<code>Math.pow(3,2)</code>和<code>Math.pow(9,1)</code，最终返回9。
 但是要注意pow的参数都是必须的，<code>[].reduce(Math.pow)</code>，等同于执行<code>Math.pow();</code>会导致错误。
 <h3>这里要介绍下<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce" target="_blank"><code>arr.reduce(callback[, initialValue])</code></a>了</h3>
-<blockquote>
+<blockquote><pre>
 <b>Parameters</b>
 
-callback
-Function to execute on each value in the array, taking four arguments:
-previousValue
-The value previously returned in the last invocation of the callback, or initialValue, if supplied. (See below.)
-currentValue
-The current element being processed in the array.
-index
-The index of the current element being processed in the array.
-array
-The array reduce was called upon.
-initialValue
-Optional. Object to use as the first argument to the first call of the callback.
-</blockquote>
+<b>allback</b>
+      Function to execute on each value in the array, taking four arguments:
+      <b>previousValue</b>
+         The value previously returned in the last invocation of the callback, or initialValue, if supplied. (See below.)
+      <b>currentValue</b>
+         The current element being processed in the array.
+      <b>index</b>
+         The index of the current element being processed in the array.
+      <b>array</b>
+         The array reduce was called upon.
+         
+<b>initialValue</b>
+      Optional. Object to use as the first argument to the first call of the callback.
+</pre></blockquote>
