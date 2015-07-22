@@ -27,7 +27,7 @@ map中回调函数的语法如下所示：<code>function callbackfn(value, index
 <h4>radix</h4>
 解析string的基数设置，可取值范围在2~36之间[闭区间]。<blockquote>(An integer between 2 and 36 that represents the radix (the base in mathematical numeral systems) of the above mentioned string. Specify 10 for the decimal numeral system commonly used by humans. Always specify this parameter to eliminate reader confusion and to guarantee predictable behavior. Different implementations produce different results when a radix is not specified.)</blockquote>
 <p>从parseInt的定义中可以得出一个方便的理解，parseInt的第一个参数一定要小于第二个参数，当然它们都是数字的String的比较。否则结果就是NaN。</p>
-<p>一个意外：当<code>radix</code>取值为0的时候，相当于默认的parseInt(string)而没有<code>radix</code>。parseInt会以10作为基数来解析。eg:</p>
+<p>一个意外：当<code>radix</code>取值为0的时候，相当于默认的parseInt(string)而没有<code>radix</code>.eg:</p>
 <pre><code>
 parseInt(1,0);//相当于parseInt(1); ->1
 parseInt(0123,0);//相当于parseInt(0123); ->83
