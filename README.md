@@ -29,6 +29,88 @@ parseInt('077', 10); //->77 (7*10 +7)
 #####一元减法（-）：当‘-’用作一元运算符的时候，它会根据需要把操作数转换为数字，然后改变运算结果的符号。
 ###6.NaN和任何值都不想等，包括它本身。
 #####通过X!===X来判断X是否为NaN，只有在X为NaN的时候这个表达式的结果才为true.(用isNaN()来判断一个变量是否为NaN)
-###7.Infinity (无限大)、-Infinity (无线小)
+###7.Infinity (无限大)、-Infinity (无限小)
+###8.JavaScript实现的几种排序算法。
+####1>快速排序算法：
+<pre><code>
+/*快速排序法*/
+        function quickSort(a) {
+                if (a.length <= 1) {
+                        return a;
+                }
+                var midLength = Math.floor(a.length / 2);
+                var midValue = a.splice(midLength,1);
+                var left = [];
+                var right = [];
+                for (var i = 0; i < a.length; i++) {
+                        if (a[i] < midValue) {
+                                left.push(a[i]);
+                        } else {
+                                right.push(a[i]);
+                        }
+                }
+                return quickSort(left).concat(midValue,quickSort(right));
+        }
+        console.log(quickSort([1,5,3,6,2,4,0]));
+</code></pre>
+####2>冒泡排序算法：
+<pre><code>
+/*冒泡排序法*/
+        function bubbleSort(a) {
+                var length = a.length;
+                var sortArray;
+                for (var i = 0; i < length-1; i++) {
+                        for (var j = 0; j < length-i-1 ; j++) {
+                                if (a[j] > a[j+1]) {
+                                        sortArray = a[j];
+                                        a[j] = a[j+1];
+                                        a[j+1] = sortArray;
+                                }
+                        }
+                }
+                return a;
+        }
+        console.log(bubbleSort([2,1,3,6,5,4,7,0]));
+</code></pre>
+####3>插入排序算法：
+<pre><code>
+/*插入排序法*/
+        function insertSort(a) {
+                var length = a.length;
+                var sortArray;
+                for (var i = 1; i < length; i++) {
+                        for (var j = 0; j < i ; j++) {
+                                if (a[i] < a[j]) {
+                                        sortArray = a[i];
+                                        a[i] = a[j];
+                                        a[j] = sortArray;
+                                }
+                        }
+                }
+                return a;
+        }
+        console.log(insertSort([0,6,5,3,4,2,1,7]));
+</code></pre>
+####4>选择排序算法：
+<pre><code>
+/*选择排序法*/
+        function selectSort(a) {
+                for (var i = 0; i < a.length; i++) {
+                        var min = a[i];
+                        var k = i;
+                        for (var j = i + 1; j < a.length; j++) {
+                                if (min > a[j]) {
+                                        min = a[j];
+                                        k = j;
+                                }
+                        }
+                        a[k] = a[i];
+                        a[i] = min;
+                }
+                return a;
+        }
+        console.log(selectSort([5,1,4,0,3,2,7,6]));
+</code></pre>
+
 
 
