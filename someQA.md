@@ -67,6 +67,7 @@ console.info([3,2,1].reduce(testFuc));
 执行<code>Math.pow(3,2)</code>和<code>Math.pow(9,1)</code，最终返回9。
 但是要注意pow的参数都是必须的，<code>[].reduce(Math.pow)</code>，等同于执行<code>Math.pow();</code>会导致错误。
 <h3>这里要介绍下<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce" target="_blank"><code>arr.reduce(callback[, initialValue])</code></a>了</h3>
+国际惯例，官方解释：
 <blockquote><pre>
 <b>Parameters</b>
 
