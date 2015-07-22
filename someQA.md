@@ -3,7 +3,7 @@
 <pre>A.["1","2","3"]
 B.[1,2,3]
 C.[0,1,2]
-D.其他</pre>.
+D.其他</pre>
 <h2>分析：</h2>
 <p style="color:red;">D</p>
 map对数组的每个元素调用定义的回调函数并返回包含结果的数组。["1","2","3"].map(parseInt)对于数组中每个元素调用paresInt。但是该题目不同于：<pre>
@@ -20,7 +20,7 @@ console.info(["1","2","3"].map(testFuc));</pre>
 map中回调函数的语法如下所示：<code>function callbackfn(value, index, array1)</code>，可使用最多三个参数来声明回调函数。第一参数value，数组元素的值；第二个参数index，数组元素的数组所以；array1，包含该元素的数组对象。
 因此，题目等同于<code>[parseInt(1,0),parseInt(2,1),parseInt(3,2)]</code>
 最终返回[1, NaN, NaN].
-H3><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt" target="_blank">parseInt()</a>:</h3>
+<h3><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt" target="_blank">parseInt()</a>:</h3>
 <code>parseInt(string, radix);</code>接受两个参数<code>string</code>和<code>radix</code>。
 <h4>string</h4>
 需要解析的一串‘类数字’string。<blockquote>(The value to parse. If string is not a string, then it is converted to one. Leading whitespace in the string is ignored.)</blockquote>
@@ -33,4 +33,17 @@ parseInt(1,0);//相当于parseInt(1); ->1
 parseInt(0123,0);//相当于parseInt(0123); ->83
 </code>
 </pre>
-<h1>2)  </h1>
+<h1>2)  [typeof null, null instanceof Object]的运行结果是？</h1>
+<pre>
+A.["object",false]
+B.[null,false]
+C.["object",true]
+D.其他
+</pre>
+<h2>分析</h2>
+<p>A</p>
+typeof用以获取一个变量或者表达式的类型，typeof一般只能返回如下几个结果：
+<p>number,boolean,string,function（函数）,object（NULL,数组，对象）,undefined。</p>
+instanceof 表示某个变量是否是某个对象的实例，null是个特殊的Object类型的值 ，表示空引用的意思 。但null返回object这个其实是最初JavaScript的实现的一个错误， 
+然后被ECMAScript沿用了，成为了现在的标准，不过我们把null可以理解为尚未存在的对象的占位符，这样就不矛盾了 ，虽然这是一种“辩解”。
+对于我们开发人员 还是要警惕这种“语言特性”。最终返回：["object", false]
