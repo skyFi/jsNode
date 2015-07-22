@@ -1,5 +1,5 @@
 
-<h1>1)  ["1","2","3"].map(parseInt);的运行结果是？</h1>
+<h1>1)  <code>["1","2","3"].map(parseInt);</code>的运行结果是？</h1>
 <pre>A.["1","2","3"]
 B.[1,2,3]
 C.[0,1,2]
@@ -33,7 +33,7 @@ parseInt(1,0);//相当于parseInt(1); ->1
 parseInt(0123,0);//相当于parseInt(0123); ->83
 </code>
 </pre>
-<h1>2)  [typeof null, null instanceof Object]的运行结果是？</h1>
+<h1>2)  <code>[typeof null, null instanceof Object]</code>的运行结果是？</h1>
 <pre>
 A.["object",false]
 B.[null,false]
@@ -47,7 +47,7 @@ typeof用以获取一个变量或者表达式的类型，typeof一般只能返�
 instanceof 表示某个变量是否是某个对象的实例，null是个特殊的Object类型的值 ，表示空引用的意思 。但null返回object这个其实是最初JavaScript的实现的一个错误， 
 然后被ECMAScript沿用了，成为了现在的标准，不过我们把null可以理解为尚未存在的对象的占位符，这样就不矛盾了 ，虽然这是一种“辩解”。<br>
 对于我们开发人员 还是要警惕这种“语言特性”。最终返回：["object", false]
-<h1>3) [[3,2,1].reduce(Math.pow),[].reduce(Math.pow)]的运行结果是？</h1>
+<h1>3) <code>[[3,2,1].reduce(Math.pow),[].reduce(Math.pow)]</code>的运行结果是？</h1>
 <pre>
 A.报错
 B.[9,0]
@@ -122,7 +122,7 @@ D.[undefined]
 <h2>分析</h2>
 <p>C</p>
 <p>filter会接触到没有被赋值的元素，即在arr中，长度为10但实际数值元素列表为[0, 1, 2, 10]，因此，最终返回一个空的数组[]</p>
-<h3>又有机会解释js函数了哈<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter" target="_blank">arr.filter(callback[, thisArg])</a></h3>
+<h3>又有机会解释js函数了哈<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter" target="_blank">arr.filter(callback[, thisArg])</a></code></h3>
 国际惯例，官方解释：
 <pre><blockquote>
 <b>Parameters</b>
@@ -133,4 +133,4 @@ D.[undefined]
     thisArg
         Optional. Value to use as this when executing callback.
 </blockquote></pre>
-<p>简单的来。就是filter返回arr中callback(value)结果为true的值。</p>
+<p>简单的来。就是filter返回arr中callback(value)结果为true的值。over</p>
