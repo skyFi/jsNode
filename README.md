@@ -113,12 +113,12 @@ parseInt('077', 10); //->77 (7*10 +7)
 </code></pre>
 ###9.一些小问题：
 ####1)["1","2","3"].map(parseInt);的运行结果是？
-A.["1","2","3"]
+<pre>A.["1","2","3"]
 B.[1,2,3]
 C.[0,1,2]
-D.其他
+D.其他</pre>
 #####分析：
-D
+<b style="color:red;">D</b>
 map对数组的每个元素调用定义的回调函数并返回包含结果的数组。["1","2","3"].map(parseInt)对于数组中每个元素调用paresInt。但是该题目不同于：<pre>
 function testFuc(a){
         return parseInt(a);
