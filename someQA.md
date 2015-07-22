@@ -45,5 +45,5 @@ D.其他
 typeof用以获取一个变量或者表达式的类型，typeof一般只能返回如下几个结果：
 <p>number,boolean,string,function（函数）,object（NULL,数组，对象）,undefined。</p>
 instanceof 表示某个变量是否是某个对象的实例，null是个特殊的Object类型的值 ，表示空引用的意思 。但null返回object这个其实是最初JavaScript的实现的一个错误， 
-然后被ECMAScript沿用了，成为了现在的标准，不过我们把null可以理解为尚未存在的对象的占位符，这样就不矛盾了 ，虽然这是一种“辩解”。
+然后被ECMAScript沿用了，成为了现在的标准，不过我们把null可以理解为尚未存在的对象的占位符，这样就不矛盾了 ，虽然这是一种“辩解”。<br>
 对于我们开发人员 还是要警惕这种“语言特性”。最终返回：["object", false]
