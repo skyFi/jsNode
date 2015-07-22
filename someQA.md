@@ -86,3 +86,25 @@ console.info([3,2,1].reduce(testFuc));
 <b>initialValue</b>
       Optional. Object to use as the first argument to the first call of the callback.
 </pre></blockquote>
+<h1>4) 以下代码的运行结果是：</h1>
+<pre><code>
+var name = 'World';
+(function(){
+    if(typeof name === 'undefined'){
+      var name = "Jack";
+      console.info('Goodbye '+ name);
+    }else{
+      console.info('Hello ' + name);
+    }
+})();
+</code></pre>
+<pre>
+A.Goodbye Jack
+B.Hello Jack
+C.Goodbye undefined
+D.Hello undefined
+</pre>
+<h2>分析</h2>
+<p>A</p>
+<p>js函数内有个叫做【声明提前】的东西。故选A。</p>
+
