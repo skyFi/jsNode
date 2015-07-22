@@ -5,7 +5,7 @@ B.[1,2,3]
 C.[0,1,2]
 D.其他</pre>
 ####分析：
-<font style="color:red;">D</font>
+<p style="color:red;">D</p>
 map对数组的每个元素调用定义的回调函数并返回包含结果的数组。["1","2","3"].map(parseInt)对于数组中每个元素调用paresInt。但是该题目不同于：<pre>
 function testFuc(a){
         return parseInt(a);
@@ -28,7 +28,8 @@ map中回调函数的语法如下所示：<code>function callbackfn(value, index
 解析string的基数设置，可取值范围在2~36之间[闭区间]。(An integer between 2 and 36 that represents the radix (the base in mathematical numeral systems) of the above mentioned string. Specify 10 for the decimal numeral system commonly used by humans. Always specify this parameter to eliminate reader confusion and to guarantee predictable behavior. Different implementations produce different results when a radix is not specified.)
 #####从parseInt的定义中可以得出一个方便的理解，parseInt的第一个参数一定要小于第二个参数，当然它们都是数字的String的比较。否则结果就是NaN。
 一个意外：当<code>radix</code>取值为0的时候，相当于默认的parseInt(string)而没有<code>radix</code>。eg:
-<pre>
+<pre><code>
 parseInt(1,0);//相当于parseInt(1); ->1
 parseInt(0123,0);//相当于parseInt(0123); ->83
+</code>
 </pre>
