@@ -133,3 +133,4 @@ D.[undefined]
     thisArg
         Optional. Value to use as this when executing callback.
 </blockquote></pre>
+<p>简单的来。就是filter返回arr中callback(value)结果为true的值。</p>
