@@ -1,5 +1,5 @@
 # jsNode
-## javaScript Node
+## javaScript(动态语言) Node
 
 ###1.利用toString()里面的参数，实现各进制之间的快速转换：
 <pre><code>
