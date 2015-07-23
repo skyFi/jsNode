@@ -228,4 +228,4 @@ D.其他
 <p>B</p>
 <p>数组，在 Javascript 中是对象，<b>对象使用 == 比较都是比较的引用</b>。简单的说，就是，如果是同一个对象，就相等，如果不是同一个对象，就不等。每次使用 [] 都是新建一个数组对象，所以 [] == [] 这个语句里建了两个数据对象，它们不等。</p>
 <h3>那么问题来了，如何判断两个数组相等呢？</h3>
-<p>...</p>
+<p>lodash中用<a href="https://lodash.com/docs#isEqual" target="_blank">_.isEqual(value, other, [customizer], [thisArg])来比较即可。</a></p>
