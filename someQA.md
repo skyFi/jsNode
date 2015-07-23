@@ -191,3 +191,28 @@ var a = new String('A');
 a == 'A';       //-> true
 </pre>
 <p>从上面我们可以知道，即使把题中的<code>showCase(new String('A'));</code>改为<code>var a = new String('A');showCase(a);</code>，它传进去的依然是个<code>String{0:'A'...}</code>对象。结果依然是C。</p>
+
+<h1>8) 以下表达式的运行结果是：</h1>
+<pre><code>
+Array.isArray(Array.prototype)
+</code></pre>
+<pre>
+A.true
+B.false
+C.报错
+D.其他
+</pre>
+<h2>分析</h2>
+<p>A</p>
+<p>
+Array.prototype为[]，Array.isArray(a)是一个判断a是否为数组的方法。
+判断对象是否为数组的方法：</p><ul><li>
+1）ES5函数isArray(),该函数测试对象的内部[[Class]]属性是否为Array:
+<code>Arrray.isArray(a);</code></li><li>
+2）判断对象的构造函数是否为Array:
+<code>a.constructor === Array</code></li><li>
+3）使用对象内部[[Class]]属性创建结果字符串：
+<code>Object.prototype.toString.call(a)</code></li><li>
+4）使用instanceof操作符测试对象是否继承自Array：
+（但由于，一个页面的iframe不会继承自另外一个页面的iframe，该方法不可靠）
+<code>a instanceof Array</code></li></ul>
