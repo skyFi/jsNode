@@ -181,12 +181,13 @@ B.Case B
 C.Do not know
 D.undefined
 </pre>
-<h2>分析<h2>
+<h2>分析</h2>
 <p style="color: #f1f1f1">C</p>
 <p>使用new String()使用构造函数调用讲一个全新的对象作为this变量的值，并且隐式返回这个新对象作为调用的结果，因此showCase()接收的参数为String {0: "A"}为不是我们所认为的“A”</p>
 但是，其实显然，此时的new String('A') == 'A';虽然new出来的是个String对象。
 <pre>
-var a = new String('A');//->a == String {0: "A", length: 1, [[PrimitiveValue]]: "A"}
-a == 'A';                       //-> true
+var a = new String('A');
+                    //->a == String {0: "A", length: 1, [[PrimitiveValue]]: "A"}
+a == 'A';       //-> true
 </pre>
 <p>从上面我们可以知道，即使把题中的<code>showCase(new String('A'));</code>改为<code>var a = new String('A');showCase(a);</code>，它传进去的依然是个<code>String{0:'A'...}</code>对象。结果依然是C。</p>
