@@ -134,3 +134,59 @@ D.[undefined]
         Optional. Value to use as this when executing callback.
 </blockquote></pre>
 <p>简单的来。就是filter返回arr中callback(value)结果为true的值。over</p>
+
+<h1>6)  以下代码运行结果是：</h1>
+<pre><code>
+var two = 0.2;
+var one = 0.1;
+var eight = 0.8;
+var six = 0.6;
+[two -one == one,eight- six == two];
+</code></pre>
+<pre>
+A.[true,true]
+B.[false,false]
+C.[true,false]
+D.其他
+</pre>
+<h2>分析</h2>
+<p>C</p>
+<p>两个浮点数相加或者相减，将会导致一定的正常的数据转换造成的精度丢失问题eight-six = 0.20000000000000007。
+JavaScript中的小数采用的是双精度(64位)表示的，由三部分组成：　符 + 阶码 + 尾数，在十进制中的 1/10，在十进制中可以简单写为 0.1 ，但在二进制中，他得写成：0.0001100110011001100110011001100110011001100110011001…..（后面全是 1001 循环）。因为浮点数只有52位有效数字，从第53位开始，就舍入了。这样就造成了“浮点数精度损失”问题。</p><p> 
+更严谨的做法是(eight-six ).totoFiexd(1)或者用用Math.round方法回归整数运算。判断两个浮点数是否相等，还是建议用逼近的比较，比如if((a-b) < 1E-10)</p>
+<p>值得注意的是，0.2-0.1却是==0.1的。</p>
+
+<h1>7)  以下代码运行的结果是：</h1>
+<pre><code>
+function showCase(value){
+      switch(value){
+           case 'A':
+                 console.info('Case A');
+                 break;
+            case 'B':
+                 console.info('Case B');
+                 break;
+            case undefined :
+                 console.info('undefined');
+                 break;
+            default:
+                 console.info('Do not know!');
+     }
+}
+showCase(new String('A'));
+</code></pre>
+<pre>
+A.Case A
+B.Case B
+C.Do not know
+D.undefined
+</pre>
+<h2>分析<h2>
+<p style="color: #f1f1f1">C</p>
+<p>使用new String()使用构造函数调用讲一个全新的对象作为this变量的值，并且隐式返回这个新对象作为调用的结果，因此showCase()接收的参数为String {0: "A"}为不是我们所认为的“A”</p>
+但是，其实显然，此时的new String('A') == 'A';虽然new出来的是个String对象。
+<pre>
+var a = new String('A');//->a == String {0: "A", length: 1, [[PrimitiveValue]]: "A"}
+a == 'A';                       //-> true
+</pre>
+<p>从上面我们可以知道，即使把题中的<code>showCase(new String('A'));</code>改为<code>var a = new String('A');showCase(a);</code>，它传进去的依然是个<code>String{0:'A'...}</code>对象。结果依然是C。</p>
