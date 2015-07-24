@@ -256,8 +256,8 @@ IE用srcElement获取事件源，而FF用target获取事件源</li>
 <li>（3）添加、移除事件
 <pre>
          IE：element.attachEvent("onclick",function)
-                element.detachEvent("onclick",function)
+             element.detachEvent("onclick",function)
          FF: element.addEventListener("click",function,true)
-                element.removeEventListener("click",function,true)
+             element.removeEventListener("click",function,true)
 </pre></li>
 </ul>
