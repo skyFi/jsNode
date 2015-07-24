@@ -230,3 +230,34 @@ D.其他
 <h3>那么问题来了，如何判断两个数组相等呢？</h3>
 <p>lodash中用<a href="https://lodash.com/docs#isEqual" target="_blank">_.isEqual(value, other, [customizer], [thisArg])</a>来比较即可。</p>
 
+<h1>10) <code>[3.toString(),3..toString(),3...toString()]</code>的运行结果是：</h1>
+<pre>
+A.["3",error,error]
+B.["3","3.0",error]
+C.[error,"3",error]
+D.其他
+</pre>
+<h2>分析</h2>
+<p>C</p>
+<p>Number中的<code>toString(a)</code>能够将数值转化成为a进制的值。但a缺省时，默认转化为十进制,一般使用方法为：
+<pre><code>
+var n = 3;
+n.toString();
+</code></pre>
+执行<code>3.toString()</code>，因为3只是为数值型变量，为非Number实例，因此对于3不能直接调用Number方法。而执行<code>3..toString()</code>，会强制将3转化为数字实例，因此能够被解释，输出'3'，同样可以使用<code>(3).toString()</code>。</p>
+<h1>11) 列举IE和FF脚本兼容性的问题:</h1>
+<h2>分析</h2>
+<p>列举IE和FF脚本兼容性的问题</p>
+<ul>
+<li>（1）window.event
+表示当前的事件对象，IE有这个对象，FF没有</li>
+<li>（2）获取事件源
+IE用srcElement获取事件源，而FF用target获取事件源</li>
+（<li>3）添加、移除事件
+<pre>
+         IE：element.attachEvent("onclick",function)
+                element.detachEvent("onclick",function)
+         FF: element.addEventListener("click",function,true)
+                element.removeEventListener("click",function,true)
+</pre></li>
+</ul>
