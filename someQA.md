@@ -253,7 +253,7 @@ n.toString();
 表示当前的事件对象，IE有这个对象，FF没有</li>
 <li>（2）获取事件源
 IE用srcElement获取事件源，而FF用target获取事件源</li>
-（<li>3）添加、移除事件
+<li>（3）添加、移除事件
 <pre>
          IE：element.attachEvent("onclick",function)
                 element.detachEvent("onclick",function)
