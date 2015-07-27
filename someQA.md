@@ -262,7 +262,7 @@ IE用srcElement获取事件源，而FF用target获取事件源</li>
 </pre></li>
 </ul>
 
-<h1>以下函数有什么问题？如何改进？</h1>
+<h1>11) 以下函数有什么问题？如何改进？</h1>
 <pre>
     <code>
         function initButtons(){
@@ -307,3 +307,88 @@ IE用srcElement获取事件源，而FF用target获取事件源</li>
 <p>如此这样，我们就要来说一下js中的闭包了啊。</p>
 <h3>闭包</h3>
 <p>鉴于这个篇幅可能有点长，放另外一个<a href="https://github.com/skyFi/jsNode/blob/master/closures.md" target="_blank">Closures</a>文件中。</p>
+<h1>12) 写一段代码，判断一个字符串中出现次数最多的字符，并统计出现的次数。</h1>
+<h2>分析</h2>
+<pre><code>
+    /*写一段代码。判断一个字符串中出现次数最多的字符串，并统计出现的次数*/
+
+    //常规方法
+    function toGetTheMostCharsByArray(s){
+        var r={};
+        for(var i=0;i< s.length;i++){
+
+            if(!r[s[i]]){
+                r[s[i]] = 1;
+            }else{
+                r[s[i]]++;
+            }
+        }
+        var max = {
+            "value": s[0],
+            "num": r[s[0]]
+        };
+
+        for(var n in r){
+            if(r[n]>max.num){
+                max.num = r[n];
+                max.value = n;
+            }
+        }
+        return max;
+    }
+    //使用正则方法
+    function toGetTheMostCharsByRegex(s){
+        var a = s.split('');
+        a.sort();
+        s = a.join('');
+        var regex = /(\w)\1+/g ; // \1+代表重复的
+        var max = {
+            "value"　:s[0],
+            "num" :  0
+        };
+
+        s.replace(regex,function(a,b){//a是重复的string:eg:'aaa',b是重复的字母char:eg:'a';
+            if(max.num < a.length){
+                max.num = a.length;
+                max.value= b;
+            }
+        });
+        return max;
+    }
+    var test = "efdfssssfrhth";
+    console.info("使用常规方法，出现最多的字符串为："+toGetTheMostCharsByArray(test).value+" ，出现次数："+toGetTheMostCharsByArray(test).num);
+    console.info("使用字符串匹配，出现最多的字符串为："+toGetTheMostCharsByRegex(test).value+" ，出现次数："+toGetTheMostCharsByRegex(test).num);
+</code></pre>
+<p>注意这里的正则判断重复字母，先留个位置为介绍正则......</p>
+<h1>13) 请问一下两段代码有什么不同？</h1>
+<pre><code>
+    //1.
+    setTimeout(function(){
+        /*代码块*/
+        setTimeout(arguments.callee,10);
+    },10);
+
+    //2.
+    setInterval(function(){
+        /*代码块*/
+    },10);
+</code></pre>
+<h2>分析</h2>
+<p>javascript的引擎是单线程的</p>
+<p>javascript的引擎是基于事件驱动的</p>
+<p>setTimeout和setInterval都是往事件队列中增加一个待处理时间而已，setTimeout只触发一次，而setInterval是循环触发</p>
+<pre><code>
+    setTimeout(function(){
+        //代码块
+        setTimeout(arguments.callee,10);
+    },10);
+    //上段代码可使得setTimeout循环触发。但是，执行完这段代码块才挂起时间，所以两次执行时间会大于10ms
+
+    setInterval(function(){
+     /*代码块*/
+    },10);
+    //而上段代码，是自动在10ms的时候挂上这个事件，所以两次事件的相隔会小于等于10ms。
+</code></pre>
+<p>当线程阻塞在一个事件的时候，不管是使用setInterval还是setTimeout都需要等待当前事件处理完才能执行。</p>
+<p>由这个问题，我们引入下面这个话题：</p>
+<p><a href="console.md" target="_blank">使用console进行<b>性能测试</b>和<b>计算代码运行时间</b></a></p>
