@@ -1,5 +1,4 @@
 <h1>JavaScript内部原理系列－闭包（Closures）</h1>
-<span>{<a href="http://segmentfault.com/a/1190000002452587#articleHeader6" target="_blank">转:kidsamong(灰常感谢)</a>}</span>
 <h2>概要</h2>
 <p>本文将介绍一个在JavaScript经常会拿来讨论的话题 —— 闭包（closure）。
     闭包其实已经是个老生常谈的话题了； 有大量文章都介绍过闭包的内容， 尽管如此，这里还是要试着从理论角度来讨论下闭包，
