@@ -1,4 +1,5 @@
-<h1>{<a href="http://segmentfault.com/a/1190000002452587#articleHeader6" target="_blank">转</a>}JavaScript内部原理系列－闭包（Closures）</h1>
+<h1>JavaScript内部原理系列－闭包（Closures）</h1>
+<span>{<a href="http://segmentfault.com/a/1190000002452587#articleHeader6" target="_blank">转:kidsamong(灰常感谢)</a>}</span>
 <h2>概要</h2>
 <p>本文将介绍一个在JavaScript经常会拿来讨论的话题 —— 闭包（closure）。
     闭包其实已经是个老生常谈的话题了； 有大量文章都介绍过闭包的内容， 尽管如此，这里还是要试着从理论角度来讨论下闭包，
@@ -180,5 +181,241 @@
     };
 </code></pre>
 <p>正如此前提到过的，出于优化的目的，当函数不使用自由变量的时候，实现层可能就不会保存上层作用域链。 然而，ECMAScript-262-3标准中并未对此作任何说明；因此，严格来说 —— 所有函数都会在创建的时候将上层作用域链保存在[[Scope]]中。</p>
-<h2 id="scope"><a href="#back" id="allScope">“万能”的[[Scope]]</a></h2>
+<h2 id="scope">“万能”的[[Scope]]</h2>
 <p>这里还要注意的是：在ECMAScript中，<b>同一个上下文中创建的闭包是共用一个[[Scope]]属性的</b>。 也就是说，某个闭包对其中的变量做修改会影响到其他闭包对其变量的读取：</p>
+<pre><code>
+    var firstClosure;
+    var secondClosure;
+
+    function foo() {
+
+        var x = 1;
+
+        firstClosure = function () { return ++x; };
+        secondClosure = function () { return --x; };
+
+        x = 2; // 对AO["x"]产生了影响, 其值在两个闭包的[[Scope]]中
+
+        alert(firstClosure()); // 3, 通过 firstClosure.[[Scope]]
+    }
+
+    foo();
+
+    alert(firstClosure()); // 4
+    alert(secondClosure()); // 3
+</code></pre>
+<p>正因为这个特性，很多人都会犯一个非常常见的错误： 当在循环中创建了函数，然后将循环的索引值和每个函数绑定的时候，通常得到的结果不是预期的（预期是希望每个函数都能够获取各自对应的索引值）。这个错误也是题目中说提到的那段代码的最大错误的地方，下面我们来揭秘为啥button点击弹出来的都是5.</p>
+<pre><code>
+    var data = [];
+
+    for (var k = 0; k < 3; k++) {
+        data[k] = function () {
+            alert(k);
+        };
+    }
+
+    data[0](); // 3, 而不是 0
+    data[1](); // 3, 而不是 1
+    data[2](); // 3, 而不是 2
+</code></pre>
+<p>上述例子就证明了 —— 同一个上下文中创建的闭包是共用一个[[Scope]]属性的。因此上层上下文中的变量“k”是可以很容易就被改变的。</p>
+<p>如下所示：</p>
+<pre><code>
+    activeContext.Scope = [
+        ... // higher variable objects
+        {data: [...], k: 3} // activation object
+    ];
+
+    data[0].[[Scope]] === Scope;
+    data[1].[[Scope]] === Scope;
+    data[2].[[Scope]] === Scope;
+</code></pre>
+<p>这样一来，在函数激活的时候，最终使用到的k就已经变成了3了。</p>
+<p>如下所示，<b title="这个方法，就是解决我们题中出现的问题的一解决方案。">创建一个额外的闭包就可以解决这个问题了</b>：</p>
+<pre><code>
+    var data = [];
+
+    for (var k = 0; k < 3; k++) {
+        data[k] = (function _helper(x) {
+            return function () {
+                alert(x);
+            };
+        })(k); // 将 "k" 值传递进去
+    }
+
+    // 现在就对了
+    data[0](); // 0
+    data[1](); // 1
+    data[2](); // 2
+</code></pre>
+<p>上述例子中，函数“_helper”创建出来之后，通过参数“k”激活。其返回值也是个函数，该函数保存在对应的数组元素中。 这种技术产生了如下效果： 在函数激活时，每次“_helper”都会创建一个新的变量对象，其中含有参数“x”，“x”的值就是传递进来的“k”的值。 这样一来，返回的函数的[[Scope]]就成了如下所示：</p>
+<pre><code>
+    data[0].[[Scope]] === [
+        ... // 更上层的变量对象
+        上层上下文的AO: {data: [...], k: 3},
+        _helper上下文的AO: {x: 0}
+    ];
+
+    data[1].[[Scope]] === [
+        ... // 更上层的变量对象
+        上层上下文的AO: {data: [...], k: 3},
+        _helper上下文的AO: {x: 1}
+    ];
+
+    data[2].[[Scope]] === [
+        ... // 更上层的变量对象
+        上层上下文的AO: {data: [...], k: 3},
+        _helper上下文的AO: {x: 2}
+    ];
+</code></pre>
+<p>我们看到，这个时候函数的[[Scope]]属性就有了真正想要的值了，为了达到这样的目的，我们不得不在[[Scope]]中创建额外的变量对象。 要注意的是，<b>在返回的函数中，如果要获取“k”的值，那么该值还是会是3</b>。</p>
+<p>顺便提下，大量介绍JavaScript的文章都认为只有额外创建的函数才是闭包，这种说法是错误的(我也差点有这个错误的认识，再次感谢作者指出。)。 实践得出，这种方式是最有效的，然而，从理论角度来说，在ECMAScript中所有的函数都是闭包。</p>
+<p>然而，上述提到的方法并不是唯一的方法。通过其他方式也可以获得正确的“k”的值，如下所示：</p>
+<pre><code>
+    var data = [];
+
+    for (var k = 0; k < 3; k++) {
+        (data[k] = function () {
+            alert(arguments.<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments/callee" target="_blank">callee</a>.x);
+        }).x = k; // 将“k”存储为函数的一个属性
+    }
+
+    // 同样也是可行的
+    data[0](); // 0
+    data[1](); // 1
+    data[2](); // 2
+</code></pre>
+<p><b>然而，arguments.callee从ECMAScript (ES5)中移除了，所以这个方法了解下就行了。</b></p>
+<h2>FunArg和return</h2>
+<p>另外一个特性是从闭包中返回。在ECMAScript中，闭包中的返回语句会将控制流返回给调用上下文（调用者）。 而在其他语言中，比如，Ruby，有很多中形式的闭包，相应的处理闭包返回也都不同，下面几种方式都是可能的：可能直接返回给调用者，或者在某些情况下——直接从上下文退出。</p>
+<p>ECMAScript标准的退出行为如下：</p>
+<pre><code>
+    function getElement() {
+
+        [1, 2, 3].forEach(function (element) {
+
+            if (element % 2 == 0) {
+                // 返回给函数"forEach"，
+                // 而不会从getElement函数返回
+                alert('found: ' + element); // found: 2
+                return element;
+            }
+
+        });
+
+        return null;
+    }
+
+    alert(getElement()); // null, 而不是 2
+</code></pre>
+<p>然而，在ECMAScript中通过try catch可以实现如下效果(这个方法简直太棒了！)：</p>
+<pre><code>
+    var $break = {};
+
+    function getElement() {
+
+        try {
+
+            [1, 2, 3].forEach(function (element) {
+
+                if (element % 2 == 0) {
+                    // 直接从getElement"返回"
+                    alert('found: ' + element); // found: 2
+                    $break.data = element;
+                    throw $break;
+                }
+
+            });
+
+        } catch (e) {
+            if (e == $break) {
+                return $break.data;
+            }
+        }
+
+        return null;
+    }
+
+    alert(getElement()); // 2
+</code></pre>
+<h2>理论版本</h2>
+<p>通常，程序员会错误的认为，只有匿名函数才是闭包。其实并非如此，正如我们所看到的 —— 正是因为作用域链，使得所有的函数都是闭包（与函数类型无关： 匿名函数，FE，NFE，FD都是闭包）， 这里只有一类函数除外，那就是通过Function构造器创建的函数，因为其[[Scope]]只包含全局对象。 为了更好的澄清该问题，我们对ECMAScript中的闭包作两个定义（即两种闭包）：</p>
+<p>ECMAScript中，闭包指的是：</p>
+<ul>
+    <li>从理论角度：所有的函数。因为它们都在创建的时候就将上层上下文的数据保存起来了。哪怕是简单的全局变量也是如此，因为函数中访问全局变量就相当于是在访问自由变量，这个时候使用最外层的作用域。</li>
+    <li>从实践角度：以下函数才算是闭包：
+        <ul>
+            <li>即使创建它的上下文已经销毁，它仍然存在（比如，内部函数从父函数中返回）</li>
+            <li>在代码中引用了<b>自由变量</b></li>
+        </ul>
+    </li>
+</ul>
+<h2>闭包实践</h2>
+<p>实际使用的时候，闭包可以创建出非常优雅的设计，允许对funArg上定义的多种计算方式进行定制。 如下就是数组排序的例子，它接受一个排序条件函数作为参数：</p>
+<pre><code>
+    [1, 2, 3].sort(function (a, b) {
+        ... // 排序条件
+    });
+</code></pre>
+<p>同样的例子还有，数组的map方法（并非所有的实现都支持数组map方法，SpiderMonkey从1.6版本开始有支持），该方法根据函数中定义的条件将原数组映射到一个新的数组中：</p>
+<pre><code>
+    [1, 2, 3].map(function (element) {
+        return element * 2;
+    }); // [2, 4, 6]
+</code></pre>
+<p>使用函数式参数，可以很方便的实现一个搜索方法，并且可以支持无穷多的搜索条件：</p>
+<pre><code>
+    someCollection.find(function (element) {
+        return element.someProperty == 'searchCondition';
+    });
+</code></pre>
+<p>还有应用函数，比如常见的forEach方法，将funArg应用到每个数组元素：</p>
+<pre><code>
+    [1, 2, 3].forEach(function (element) {
+        if (element % 2 != 0) {
+            alert(element);
+        }
+    }); // 1, 3
+</code></pre>
+<p>顺便提下，函数对象的 apply 和 call方法，在函数式编程中也可以用作应用函数。这里，我们将它们看作是应用函数 —— 应用到参数中的函数（在apply中是参数列表，在call中是独立的参数）：</p>
+<pre><code>
+    (function () {
+        alert([].join.call(arguments, ';')); // 1;2;3
+    }).apply(this, [1, 2, 3]);
+</code></pre>
+<p>闭包还有另外一个非常重要的应用 —— 延迟调用：</p>
+<pre><code>
+    var a = 10;
+    setTimeout(function () {
+        alert(a); // 10, 一秒钟后
+    }, 1000);
+</code></pre>
+<p>也可以用于回调函数：</p>
+<pre><code>
+    ...
+    var x = 10;
+    // only for example
+    xmlHttpRequestObject.onreadystatechange = function () {
+        // 当数据就绪的时候，才会调用;
+        // 这里，不论是在哪个上下文中创建，变量“x”的值已经存在了
+        alert(x); // 10
+    };
+    ..
+</code></pre>
+<p>还可以用于封装作用域来隐藏辅助对象：</p>
+<pre><code>
+    var foo = {};
+
+    // initialization
+    (function (object) {
+
+        var x = 10;
+
+        object.getX = function _getX() {
+            return x;
+        };
+
+    })(foo);
+
+    alert(foo.getX()); // get closured "x" – 10
+</code></pre>
