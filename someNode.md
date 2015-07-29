@@ -108,3 +108,77 @@ parseInt('077', 10); //->77 (7*10 +7)
         }
         console.log(selectSort([5,1,4,0,3,2,7,6]));
 </code></pre>
+<h2>9) 不要在循环内部使用try-catch-finally</h2>
+<p>try-catch-finally中catch部分在执行时会将异常赋给一个变量，这个变量会被构建成一个运行时作用域内的新的变量。</p>
+<p>切忌：</p>
+<pre><code>
+    var object = ['foo', 'bar'], i;
+    for (i = 0, len = object.length; i < len; i++) {
+        try {
+            // do something that throws an exception
+        }
+        catch (e) {
+            // handle exception
+        }
+    }
+</code></pre>
+<p>而应该：</p>
+<pre><code>
+    var object = ['foo', 'bar'], i;
+    try {
+        for (i = 0, len = object.length; i <len; i++) {
+            // do something that throws an exception
+        }
+    }
+    catch (e) {
+        // handle exception
+    }
+</code></pre>
+<h2>10) 使用XMLHttpRequests时注意设置超时</h2>
+<p>XMLHttpRequests在执行时，当长时间没有响应（如出现网络问题等）时，应该中止掉连接，可以通过setTimeout()来完成这个工作：</p>
+<pre><code>
+    var xhr = new XMLHttpRequest ();
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            clearTimeout(timeout);
+            // do something with response data
+        }
+    }
+    var timeout = setTimeout( function () {
+        xhr.abort(); // call error callback
+    }, 60*1000 /* timeout after a minute */ );
+    xhr.open('GET', url, true);
+    xhr.send();
+</code></pre>
+<p>同时需要注意的是，不要同时发起多个XMLHttpRequests请求。</p>
+<h2>11) 处理WebSocket的超时</h2>
+<p>通常情况下，WebSocket连接创建后，如果30秒内没有任何活动，服务器端会对连接进行超时处理，防火墙也可以对单位周期没有活动的连接进行超时处理。</p>
+<p>为了防止这种情况的发生，可以每隔一定时间，往服务器发送一条空的消息。可以通过下面这两个函数来实现这个需求，一个用于使连接保持活动状态，另一个专门用于结束这个状态。</p>
+<pre><code>
+    var timerId = 0;
+    function keepAlive() {
+        var timeout = 15000;
+        if (webSocket.readyState == webSocket.OPEN) {
+            webSocket.send('');
+        }
+        timerId = setTimeout(keepAlive, timeout);
+    }
+    function cancelKeepAlive() {
+        if (timerId) {
+            cancelTimeout(timerId);
+        }
+    }
+</code></pre>
+<p>keepAlive()函数可以放在WebSocket连接的onOpen()方法的最后面，cancelKeepAlive()放在onClose()方法的最末尾。</p>
+<h2>12) 注意原始操作符比函数调用快</h2>
+<p>比如，一般不要这样：</p>
+<pre><code>
+    var min = Math.min(a,b);
+    A.push(min);
+</code></pre>
+<p>可以这样来代替：</p>
+<pre><code>
+    var min = a < b ? a : b;
+    A[A.length] = min;
+</code></pre>
+
