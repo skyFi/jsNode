@@ -4,13 +4,13 @@
 ***
 ## [一些问题与不一定对的解析](https://github.com/skyFi/jsNode/blob/master/someQA.md)
 ***
-## [一些遇到的小问题，小笔记](https://github.com/skyFi/jsNode/blob/master/someNode.md)
+## [遇到的小问题，小笔记](https://github.com/skyFi/jsNode/blob/master/someNode.md)
 ***
 ## [js控制台の灵活运用](https://github.com/skyFi/jsNode/blob/master/js/console.md)
 ***
-## [JavaScript闭包的理解](https://github.com/skyFi/jsNode/blob/master/js/closures.md)
+## [对JavaScript闭包的理解](https://github.com/skyFi/jsNode/blob/master/js/closures.md)
 ***
-## [JavaScript的作用域链](https://github.com/skyFi/jsNode/blob/master/js/JavaScript%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE.md)
+## [小说JavaScript的作用域链](https://github.com/skyFi/jsNode/blob/master/js/JavaScript%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE.md)
 ***
 ## [SEO优化](https://github.com/skyFi/jsNode/blob/master/css/SEO%E4%BC%98%E5%8C%96.md)
 ***
