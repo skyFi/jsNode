@@ -177,13 +177,13 @@
 <p>也就是说, age会被定义在顶级作用域中.</p>
 <p>现在, 也许你注意到了我刚才说的: JS在<strong>执行<i style="color: red;">每一段</i>JS代码之前, 都会首先处理var关键字和function定义式(函数定义式和函数表达式).</strong></p>
 <p>对, 让我们看看下面的例子:</p>
-"`javaScript
-    < script >
+"`html
+    <script >
         alert(typeof mm); //结果:undefined
-    < /script >
-    < script >
+    </script >
+    <script >
         function mm() {
             alert('I am skylor');
         }
-    < /script >
+    </script >
 `"
