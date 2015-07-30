@@ -178,12 +178,12 @@
 <p>现在, 也许你注意到了我刚才说的: JS在<strong>执行每一段JS代码之前, 都会首先处理var关键字和function定义式(函数定义式和函数表达式).</strong></p>
 <p>对, 让我们看看下面的例子:</p>
 <pre><code>
-    <script>
-        alert(typeof eve); //结果:undefined
-    </script>
-    <script>
-        function eve() {
-            alert('I am Laruence');
+    < script >
+        alert(typeof mm); //结果:undefined
+    < /script >
+    < script >
+        function mm() {
+            alert('I am skylor');
         }
-    </script>
+    < /script >
 </code></pre>
