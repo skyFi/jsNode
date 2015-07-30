@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #wrap {
+            width: 580px;
+            height: 440px;
+            background: #9ed2d9;
+            border: 5px solid #9ed2d9;
+            position: relative;
+            margin: 30px auto 20px auto;
+            -o-border-radius: 20px;
+            -icab-border-radius: 20px;
+            -khtml-border-radius: 20px;
+            -moz-border-radius: 20px;
+            -webkit-border-radius: 20px;
+            border-radius: 20px;
+        }
+
+        #slide {
+            padding: 370px 0 0 0;
+            margin: 0;
+            list-style: none;
+            width: 480px;
+            height: 30px;
+            overflow: hidden;
+            position: absolute;
+            left: 48px;
+            top: 29px;
+        }
+
+        #slide b {
+            float: left;
+        }
+
+        #slide span {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 360px;
+            width: 480px;
+            border: 1px solid #698639;
+            border-color: #698639 #e0ebcb #e0ebcb #698639;
+        }
+
+        #slide b.overlay {
+            display: block;
+            width: 490px;
+            height: 370px;
+            background: transparent;
+            position: absolute;
+            top: -5px;
+            left: -5px;
+        }
+
+        #slide i {
+            display: block;
+            float: left;
+            margin-right: 5px;
+            width: 20px;
+            height: 20px;
+            color: #000;
+            line-height: 19px;
+            font-family: arial, sans-serif;
+            font-style: normal;
+            font-size: 11px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        #slide b img {
+            display: block;
+            border: 0;
+            position: absolute;
+            top: 0;
+            left: -1px;
+            -webkit-transition: all 0.7s ease-in-out;
+        }
+
+        #title {
+            width: 131px;
+            height: 132px;
+            position: absolute;
+            left: 5px;
+            top: -30px;
+            z-index: 30;
+        }
+
+
+        #slide i:hover {
+            background-position: 0 -20px;
+            color: #fff;
+        }
+
+        #slide .p1:hover img {
+            left: -1px;
+        }
+
+        #slide .p2:hover img {
+            left: -481px;
+        }
+
+        #slide .p3:hover img {
+            left: -961px;
+        }
+
+        #slide .p4:hover img {
+            left: -1441px;
+        }
+
+        #slide .p5:hover img {
+            left: -1921px;
+        }
+
+        #slide .p6:hover img {
+            left: -2401px;
+        }
+
+        #slide .p7:hover img {
+            left: -2881px;
+        }
+
+        #slide .p8:hover img {
+            left: -3361px;
+        }
+
+        #slide .p9:hover img {
+            left: -3841px;
+        }
+
+        #slide .p10:hover img {
+            left: -4321px;
+        }
+        .title {
+            margin-top: 30px;
+            margin-left: 400px;
+        }
+    </style>
+
+</head>
+<body>
+<div class="title">这种方法，是把需要展示的图片集合并长一个长横图，然后再通过:hover伪类来改变图片的位置，从而达到幻灯片的效果</div>
+<div id="wrap">
+    <div id="slide">
+        <b class="p1"><i>1</i>
+            <b class="p2"><i>2</i>
+                <b class="p3"><i>3</i>
+                    <b class="p4"><i>4</i>
+                        <b class="p5"><i>5</i>
+                            <b class="p6"><i>6</i>
+                                <b class="p7"><i>7</i>
+                                    <b class="p8"><i>8</i>
+                                        <b class="p9"><i>9</i>
+                                            <b class="p10"><i>10</i><span><img src="./../images/long.jpg" alt="" /></span></b>
+                                        </b>
+                                    </b>
+                                </b>
+                            </b>
+                        </b>
+                    </b>
+                </b>
+            </b>
+        </b>
+        <b class="overlay"></b>
+    </div> <!-- end slide -->
+</div>
+
+</body>
+</html>
