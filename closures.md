@@ -419,3 +419,109 @@
 
     alert(foo.getX()); // get closured "x" – 10
 </code></pre>
+<h2>几个闭包样例</h2>
+<p>感谢<a href="http://blog.morrisjohns.com/javascript_closures_for_dummies.html" target="_blank">JavaScript Closures For Dummies(镜像)</a></p>
+<strong>例子1:闭包中局部变量是引用而非拷贝</strong>
+<pre><code>
+    function say667() {
+        // Local variable that ends up within closure
+        var num = 666;
+        var sayAlert = function() {
+            alert(num);
+        }
+        num++;
+        return sayAlert;
+    }
+
+    var sayAlert = say667();
+    sayAlert()
+</code></pre>
+<p>因此执行结果应该弹出的667而非666。</p>
+<strong>例子2：多个函数绑定同一个闭包，因为他们定义在同一个函数内。</strong>
+<pre><code>
+    function setupSomeGlobals() {
+        // Local variable that ends up within closure
+        var num = 666;
+        // Store some references to functions as global variables
+        gAlertNumber = function() { alert(num); }
+        gIncreaseNumber = function() { num++; }
+        gSetNumber = function(x) { num = x; }
+    }
+    setupSomeGlobals();         // 为三个全局变量赋值
+    gAlertNumber();             //666
+    gIncreaseNumber();
+    gAlertNumber();             // 667
+    gSetNumber(12);             //
+    gAlertNumber();             //12
+</code></pre>
+<strong>例子3：当在一个循环中赋值函数时，这些函数将绑定同样的闭包</strong>
+<pre><code>
+    function buildList(list) {
+        var result = [];
+        for (var i = 0; i < list.length; i++) {
+            var item = 'item' + list[i];
+            result.push( function() {alert(item + ' ' + list[i])} );
+        }
+        return result;
+    }
+
+    function testList() {
+        var fnList = buildList([1,2,3]);
+        // using j only to help prevent confusion - could use i
+        for (var j = 0; j < fnList.length; j++) {
+            fnList[j]();
+        }
+    }
+</code></pre>
+<p>testList的执行结果是弹出item3 undefined窗口三次，因为这三个函数绑定了同一个闭包，而且item的值为最后计算的结果，但是当i跳出循环时i值为4，所以list[4]的结果为undefined.(再具体原因，前面有解释过。)</p>
+<strong>例子4：外部函数所有局部变量都在闭包内，即使这个变量声明在内部函数定义之后。</strong>
+<pre><code>
+    function sayAlice() {
+        var sayAlert = function() { alert(alice); }
+        // Local variable that ends up within closure
+        var alice = 'Hello Alice';
+        return sayAlert;
+    }
+    var helloAlice=sayAlice();
+    helloAlice();
+</code></pre>
+<p>执行结果是弹出”Hello Alice”的窗口。即使局部变量声明在函数sayAlert之后，局部变量仍然可以被访问到。</p>
+<strong>例子5：每次函数调用的时候创建一个新的闭包</strong>
+<pre><code>
+    function newClosure(someNum, someRef) {
+        // Local variables that end up within closure
+        var num = someNum;
+        var anArray = [1,2,3];
+        var ref = someRef;
+        return function(x) {
+            num += x;
+            anArray.push(num);
+            alert('num: ' + num +
+                '\nanArray ' + anArray.toString() +
+                '\nref.someVar ' + ref.someVar);
+        }
+    }
+    closure1=newClosure(40,{someVar:'closure 1'});
+    closure2=newClosure(1000,{someVar:'closure 2'});
+
+    closure1(5); // num:45 anArray[1,2,3,45] ref:'someVar closure1'
+    closure2(-10);// num:990 anArray[1,2,3,990] ref:'someVar closure2'
+</code></pre>
+<strong>Singleton 单件：</strong>
+<pre><code>
+    var singleton = function () {
+        var privateVariable;
+        function privateFunction(x) {
+            ...privateVariable...
+        }
+
+        return {
+            firstMethod: function (a, b) {
+                ...privateVariable...
+            },
+            secondMethod: function (c) {
+                ...privateFunction()...
+            }
+    };
+</code></pre>
+<p>这个单件通过闭包来实现。通过闭包完成了私有的成员和方法的封装。匿名主函数返回一个对象。对象包含了两个方法，方法1可以方法私有变量，方法2访 问内部私有函数。需要注意的地方是匿名主函数结束的地方的’()’，如果没有这个’()’就不能产生单件。因为匿名函数只能返回了唯一的对象，而且不能被 其他地方调用。这个就是利用闭包产生单件的方法。</p>
