@@ -393,3 +393,10 @@ IE用srcElement获取事件源，而FF用target获取事件源</li>
 <p>当线程阻塞在一个事件的时候，不管是使用setInterval还是setTimeout都需要等待当前事件处理完才能执行。</p>
 <p>由这个问题，我们引入下面这个话题：</p>
 <p><a href="console.md" target="_blank">使用console进行<b>性能测试</b>和<b>计算代码运行时间</b></a></p>
+<h1>14)以下代码弹出的是？</h1>
+<pre><code>
+    alert(1&&2);
+</code></pre>
+<h2>分析</h2>
+<p>a && b : 若a为真，返回b，若a为假，返回a。故弹出2.</p>
+<p>同理，|| 前面为假取后，前面为真取前。</p>
