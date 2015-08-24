@@ -1,0 +1,51 @@
+有这样一个问题：
+一个列表里面，很多option，但是在不知道value，只知道他的内容的时候，怎么进行选择，比如：
+<pre>
+<option value="541">北京市</option>
+<option value="560">天津市</option>
+<option value="579">上海市</option>
+<option value="599">重庆市</option>
+</pre>
+在不知道他的value和index的时候，选择北京市，能否实现，怎么操作？
+ 
+ 实现的方法呢：
+ 第一个是常规的：
+ <pre>
+ $('select option').filter(function(){return this.text === '北京市'});
+ </pre>
+ 然而学过jQuery 里面还有个选择器叫做:contains()。
+ <pre>
+ $("select option:contains('北京市')")
+ </pre>
+这样就直接选到了想要的。
+
+<pre>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>contains demo</title>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+ 
+<div>John Resig</div>
+<div>George Martin</div>
+<div>Malcom John Sinclair</div>
+<div>J. Ohn</div>
+ 
+<script>
+$( "div:contains('John')" ).css( "text-decoration", "underline" );
+</script>
+ 
+</body>
+</html>
+</pre>
+
+结果是： 
+<pre>
+John Resig //下划线
+George Martin
+Malcom John Sinclair //下划线
+J. Ohn
+</pre>
