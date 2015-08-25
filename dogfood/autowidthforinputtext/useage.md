@@ -1,1 +1,1 @@
-$('#txt').autoFit();
+$(selector).autoFit();
