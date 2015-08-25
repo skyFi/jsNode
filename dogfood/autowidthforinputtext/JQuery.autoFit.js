@@ -19,6 +19,3 @@
 			return $this;
 		};
 })(this['jQuery']);
-
-
-$('#txt').autoFit();
