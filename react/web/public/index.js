@@ -5,6 +5,11 @@ var React = React;
 var converter = new Showdown.converter();
 
 var CommentBox = React.createClass({
+    getDefaultProps: function() {
+        return  {
+            pollInterval: 1000
+        };
+    },
     getInitialState: function() {
         return {data: []};
     },
@@ -71,6 +76,7 @@ var CommentList = React.createClass({
     }
 });
 
+{/*评论主体*/}
 var Comment = React.createClass({
     render: function () {
         var rawMarkup = converter.makeHtml(this.props.children.toString());
@@ -108,6 +114,45 @@ var CommentForm = React.createClass({
         );
     }
 });
+
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
+var TodoList = React.createClass({
+    getInitialState: function() {
+        return {items: ['hello', 'world', 'click', 'me']};
+    },
+    handleAdd: function() {
+        var newItems = this.state.items.concat([prompt('Enter some text')]);
+        this.setState({items: newItems});
+    },
+    handleRemove: function(i) {
+        var newItems = this.state.items;
+        newItems.splice(i, 1);
+        this.setState({items: newItems});
+    },
+    render: function() {
+        var items = this.state.items.map(function(item, i) {
+            return (
+                <div key={item + i} onClick={this.handleRemove.bind(this, i)}>
+                    {item}
+                </div>
+            );
+        }.bind(this));
+        return (
+            <div>
+                <button onClick={this.handleAdd}>Add Item</button>
+                <ReactCSSTransitionGroup transitionName="skylor">
+                    {items}
+                </ReactCSSTransitionGroup>
+            </div>
+        );
+    }
+});
+
+React.render(
+    <TodoList />,
+    document.getElementById('content1')
+);
 
 React.render(
     <CommentBox url="comments.json" pollInterval={2000} />,

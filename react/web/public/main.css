@@ -1,0 +1,16 @@
+.skylor-enter {
+    opacity: 0.01;
+    transition: opacity .5s ease-in;
+}
+
+.skylor-enter.skylor-enter-active {
+    opacity: 1;
+}
+.skylor-leave {
+    opacity: 1;
+    transition: opacity .5s ease-in;
+}
+
+.skylor-leave.skylor-leave-active {
+    opacity: 0.01;
+}
