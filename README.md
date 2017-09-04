@@ -1,3 +1,4 @@
+<code>博文已经迁移至http://fangyongle.com 且后续更新都会在站点，而不维护此repo了</code>
 <div class="about">关于我</div>
 <div class="control"><span id="control-lable">邮箱：</span><span>fyl_2525@163.com</span></div>
 <div class="control"><span id="control-lable">QQ：</span><span>1292736382</span></div>
